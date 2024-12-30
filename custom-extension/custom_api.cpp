@@ -15,6 +15,7 @@ using namespace torch;
 
 // NOTE: Code for extending the backend of Pytorch
 
+// NOTE: Normalization function, implemented in mulithreading
 torch::Tensor normal_multi_thread(float std, int n_emb, int dim, int n_cores){
   int unit = n_emb / n_cores;
   int remain = n_emb % n_cores;
