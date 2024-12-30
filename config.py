@@ -1,5 +1,6 @@
 import torch
 
+# mode configuration
 MODE_DPSGD_B = 1
 MODE_DPSGD_R = 2
 MODE_DPSGD_F = 3
