@@ -6,7 +6,7 @@ Since this repository is built on the Opacus library (which, as of version 1.2.0
 Additionally, the profiler included in this repository is specifically tailored for DLRM training, one of the most widely used ML models in both industry and academia. Users who wish to profile other types of models can also utilize this tool by making adjustments to the profiler code.
 
 ## Setup
-Since testing this profiler generates DLRM models that can reach hundreds of gigabytes in size, first select a directory where a large amount of model data can be stored. (e.g., `/raid/model_weight/`).
+Since running this profiler generates DLRM models that can reach hundreds of gigabytes in size, designate a directory where the large amount of model data can be stored. (e.g., `/raid/model_weight/`).
 ```bash
 mkdir {absolute_path_to_model_weight_directory}
 export PATH_MODEL_WEIGHT={absolute_path_to_model_weight_directory}
@@ -23,7 +23,7 @@ cd /workspace
 git clone https://github.com/VIA-Research/dpsgd_profiler.git
 ```
 
-Run `setup.sh` in cloned directory to extend PyTorch and install required packages. This extension accelerates several operations such as noise generation and sparse parameter updates on CPU device.
+Run `setup.sh` in the cloned directory to extend PyTorch and install required packages. This extension accelerates several operations such as noise generation and sparse parameter updates on CPU device.
 ```bash
 cd $PATH_MAIN
 ./setup.sh
