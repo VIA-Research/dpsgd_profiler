@@ -146,7 +146,6 @@ torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cor
     }
   }
 
-  // 5
   torch::Tensor out_indices = torch::empty({1, coalesced_indices_vector.size()}, torch::kInt64);
   memcpy(out_indices.data<long int>(), &coalesced_indices_vector[0], coalesced_indices_vector.size() * sizeof(long int));
   torch::Tensor output = torch::sparse_coo_tensor(out_indices, out_values, {n_embs, dim});
@@ -158,7 +157,7 @@ torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cor
 
 torch::Tensor coalesce_multi_thread_embeddingbag(const torch::Tensor &input, int n_cores){
   // If input tensor is already coalesced, just return
-  if(input.is_coalesced()){
+  if (input.is_coalesced()) {
     return input;
   }
 
@@ -177,7 +176,7 @@ torch::Tensor coalesce_multi_thread_embeddingbag(const torch::Tensor &input, int
   // 1. Create a vector of pairs (indices, new indices started from 0)
   std::vector<long int> indices_vector(indices.data<long int>(), indices.data<long int>() + indices.numel());
   std::vector<int_pair> indices_vector_with_index(n_rows);
-  std::for_each(std::execution::par_unseq, indices_vector_with_index.begin(), indices_vector_with_index.end(), [&](int_pair &pair){
+  std::for_each(std::execution::par_unseq, indices_vector_with_index.begin(), indices_vector_with_index.end(), [&](int_pair &pair) {
     unsigned long int i = (uintptr_t(&pair) - uintptr_t(indices_vector_with_index.data())) / sizeof(int_pair); 
     pair.first = indices_vector[i];
     pair.second = i;
