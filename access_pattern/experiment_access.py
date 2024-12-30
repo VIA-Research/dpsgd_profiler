@@ -15,6 +15,9 @@ import numpy as np
 
 class AccessGenerator:
     def __init__(self, gpu_num, E, B, L, alpha=None):
+        # E: embedding dimension
+        # B: batch size
+        # L: pooling factor (i.e., number of embeddings accessed per example)
         self.E = E
         self.B = B
         self.L = L
