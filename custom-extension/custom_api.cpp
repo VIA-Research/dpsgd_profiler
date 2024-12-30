@@ -215,7 +215,7 @@ torch::Tensor coalesce_multi_thread_embeddingbag(const torch::Tensor &input, int
     }
   });
   std::exclusive_scan(std::execution::par_unseq, difference_occur.begin(), difference_occur.end(), result_exclusive_scan.begin(), 0);
-  std::for_each(std::execution::par_unseq, difference_occur.begin(), difference_occur.end(), [&](long int &e){
+  std::for_each(std::execution::par_unseq, difference_occur.begin(), difference_occur.end(), [&](long int &e) {
     if (e == 1) {
       unsigned long int i = (uintptr_t(&e) - uintptr_t(difference_occur.data())) / sizeof(long int); 
       embedding_offset[result_exclusive_scan[i]] = i;
