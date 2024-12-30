@@ -1773,7 +1773,8 @@ def run():
             assert(config.num_gathers == 1)
             custom_dataset = CustomDataset(args.num_batches * args.mini_batch_size, ln_emb, config.num_gathers)
             train_ld = DataLoader(custom_dataset, batch_size=args.mini_batch_size, shuffle=False, collate_fn=collate_fn)
-            
+
+        # Enable DP-SGD by privatizing the model, optimizer, and data loader with specified privacy parameters
         dlrm, optimizer, train_ld = privacy_engine.make_private_with_epsilon(
             module=dlrm,
             optimizer=optimizer,
@@ -2051,7 +2052,8 @@ def run():
                         # optimizer
                         if(args.dpsgd_mode == "sgd"):
                             config.profiler.start("Update_original")
-                            
+
+                        # Perform optimizer step and learning rate update based on DP-SGD mode
                         if (args.mlperf_logging and (j + 1) % args.mlperf_grad_accum_iter == 0) or not args.mlperf_logging:
                             if args.dpsgd_mode in ["dpsgd_r", "dpsgd_f", "eana"]:
                                 # to do backward twice
