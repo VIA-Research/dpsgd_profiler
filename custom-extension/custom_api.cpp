@@ -137,10 +137,10 @@ torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cor
   assert(values.is_contiguous());
 
   #pragma omp parallel for num_threads(n_cores)
-  for(int i = 0; i < n_coalesced_rows; i++){
+  for (int i = 0; i < n_coalesced_rows; i++) {
     memcpy(out_values.data<float>() + i * dim, values.data<float>() + indices_vector_with_index[start_indices[i]].second * dim, dim * sizeof(float));
-    if(end_indices[i] > start_indices[i]){
-      for(int j = start_indices[i] + 1; j <= end_indices[i]; j++){
+    if (end_indices[i] > start_indices[i]) {
+      for (int j = start_indices[i] + 1; j <= end_indices[i]; j++) {
         out_values.index({i}).add_(values.index({indices_vector_with_index[j].second}));
       }
     }
