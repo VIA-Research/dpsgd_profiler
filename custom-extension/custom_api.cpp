@@ -190,7 +190,7 @@ torch::Tensor coalesce_multi_thread_embeddingbag(const torch::Tensor &input, int
   // 3. Extract each elements and form seperated vector
   std::vector<long int> sorted_first(indices.numel());
   std::vector<long int> embedding_idx(indices.numel());
-  std::for_each(std::execution::par_unseq, indices_vector_with_index.begin(), indices_vector_with_index.end(), [&](const int_pair &pair){
+  std::for_each(std::execution::par_unseq, indices_vector_with_index.begin(), indices_vector_with_index.end(), [&](const int_pair &pair) {
     unsigned long int i = (uintptr_t(&pair) - uintptr_t(indices_vector_with_index.data())) / sizeof(int_pair); 
     sorted_first[i] = pair.first;
     embedding_idx[i] = pair.second;
@@ -208,15 +208,15 @@ torch::Tensor coalesce_multi_thread_embeddingbag(const torch::Tensor &input, int
   std::vector<long int> result_exclusive_scan(n_rows);
   std::for_each(std::execution::par_unseq, difference_occur.begin(), difference_occur.end(), [&](long int &e){
     unsigned long int i = (uintptr_t(&e) - uintptr_t(difference_occur.data())) / sizeof(long int); 
-    if((i == 0) || (indices_vector_with_index[i-1].first != indices_vector_with_index[i].first)){
+    if ((i == 0) || (indices_vector_with_index[i-1].first != indices_vector_with_index[i].first)) {
       e = 1;
-    }else{
+    } else {
       e = 0;
     }
   });
   std::exclusive_scan(std::execution::par_unseq, difference_occur.begin(), difference_occur.end(), result_exclusive_scan.begin(), 0);
   std::for_each(std::execution::par_unseq, difference_occur.begin(), difference_occur.end(), [&](long int &e){
-    if(e == 1){
+    if (e == 1) {
       unsigned long int i = (uintptr_t(&e) - uintptr_t(difference_occur.data())) / sizeof(long int); 
       embedding_offset[result_exclusive_scan[i]] = i;
     }
