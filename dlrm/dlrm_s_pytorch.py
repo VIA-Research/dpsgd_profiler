@@ -723,12 +723,13 @@ class DLRM_Net(nn.Module):
 
     def parallel_forward(self, dense_x, lS_o, lS_i):
         ### prepare model (overwrite) ###
-        # WARNING: # of devices must be >= batch size in parallel_forward call
+        # WARNING: The number of devices must be >= batch size in parallel_forward call
         batch_size = dense_x.size()[0]
         ndevices = min(self.ndevices, batch_size, len(self.emb_l))
         device_ids = range(ndevices)
-        # WARNING: must redistribute the model if mini-batch size changes (this is common
-        # for last mini-batch, when # of elements in the dataset/batch size is not even)
+        # WARNING: The model must be redistributed if mini-batch size changes 
+        # This commonly occurs for the last mini-batch when the number of elements
+        # in the dataset is not divisible by the batch size.
         if self.parallel_model_batch_size != batch_size:
             self.parallel_model_is_not_prepared = True
 
@@ -2008,6 +2009,7 @@ def run():
                         # (where we do not accumulate gradients across mini-batches)
                         if (args.mlperf_logging and (j + 1) % args.mlperf_grad_accum_iter == 0) or not args.mlperf_logging:
                             config.profiler.start("BW_zero_grad")
+                            # If DP-SGD mode is 'sgd', use in-place gradient clearing.
                             if args.dpsgd_mode == "sgd":
                                 optimizer.zero_grad(True)
                             else:
@@ -2015,6 +2017,7 @@ def run():
                             config.profiler.end("BW_zero_grad")
                             
                         # backward pass
+                        # perform backward pass and gradient coalescing based on the specified DP-SGD mode
                         config.profiler.start("BW_grad")
                         if args.dpsgd_mode in ["dpsgd_r", "dpsgd_f", "eana"]:
                             # to eliminate calculations of per-batch weight gradients
