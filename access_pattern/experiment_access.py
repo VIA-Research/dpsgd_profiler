@@ -60,6 +60,16 @@ def run():
     parser.add_argument("--gpu-num", type=int, default=0)
     args = parser.parse_args()
 
+    if not args.B > 0:
+        raise ValueError(f"batch size (B) should be a positive integer, received: {args.B}")
+    if not args.L > 0:
+        raise ValueError(f"pooling factor (L) should be a positive integer, received: {args.L}")
+    if not args.E > 0:
+        raise ValueError(f"embedding dimension (E) should be a positive integer, received: {args.E}")
+    if not args.niters > 0:
+        raise ValueError(f"number of iterations (niters) should be a positive integer, received: {args.niters}")
+    if not args.gpu_num >= 0:
+        raise ValueError(f"number of GPUs (gpu-num) should be a nonnegative integer, received: {args.gpu_num}")
     # assert(args.L == 1)
 
     iter = 100
