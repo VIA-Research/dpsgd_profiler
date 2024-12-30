@@ -60,6 +60,7 @@ def compute_embedding_grad_sample(
     return ret
 
 
+# reimplement Opacus functions in a memory-efficient manner for conservative evaluation
 @register_grad_sampler(nn.EmbeddingBag)
 def compute_embeddingbag_gradsampler(layer, inputs, backprops):
     # Restrict all examples to have the same value of num_gather
