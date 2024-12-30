@@ -1,4 +1,4 @@
-# class "LatencyMeter" is for an automatic measurement of latency
+# class "LatencyMeter" is used to measure latency automatically
 # 
 # Case 1: SGD
 # _________________________________________________________________________________________________________________________________________________________________
@@ -13,7 +13,7 @@
 #
 # Case 2: DP-SGD (Fast-DP-SGD)
 # 
-# Forward and Backward are same with "Case 1: SGD"
+# Forward and Backward phases are identical to those of "Case 1: SGD"
 #__________________________________________________________________________________________________________________________________
 #  | Update_entire                                                                                                                 |
 #  | per-example & network-wise norm | loss clipping | 2nd backprop | p.summed_grad to reuse code | Update_noise | Update_original | 
