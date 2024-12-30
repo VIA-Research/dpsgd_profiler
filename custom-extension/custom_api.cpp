@@ -25,14 +25,14 @@ torch::Tensor normal_multi_thread(float std, int n_emb, int dim, int n_cores){
   auto output_a = output.accessor<float, 2>();
 
   #pragma omp parallel for num_threads(n_cores)
-  for(int i = 0; i < n_cores; i++){
+  for(int i = 0; i < n_cores; i++) {
     torch::Generator generator = make_generator<CPUGeneratorImpl>();
     generator.set_current_seed(rand());
-    if(i == n_cores - 1 && remain != 0){
+    if(i == n_cores - 1 && remain != 0) {
       torch::Tensor output_slice = output.index({torch::indexing::Slice(unit*i, unit*(i+1) + remain)});
       torch::normal_out(output_slice, 0, std, {unit + remain, dim}, generator);
     }
-    else{
+    else {
       torch::Tensor output_slice = output.index({torch::indexing::Slice(unit*i, unit*(i+1))});
       torch::normal_out(output_slice, 0, std, {unit, dim}, generator);
     }
