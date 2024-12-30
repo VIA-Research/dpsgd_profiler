@@ -622,7 +622,7 @@ class DLRM_Net(nn.Module):
 
     def distributed_forward(self, dense_x, lS_o, lS_i):
         batch_size = dense_x.size()[0]
-        # WARNING: # of ranks must be <= batch size in distributed_forward call
+        # WARNING: The number of ranks must be <= batch size in distributed_forward call
         if batch_size < ext_dist.my_size:
             sys.exit(
                 "ERROR: batch_size (%d) must be larger than number of ranks (%d)"
@@ -1895,6 +1895,8 @@ def run():
                     assert False, "Exclude the mlperf_logging"
                     previous_iteration_time = None
 
+                # process input batches with optional ONNX export, skipping, and 
+                # synthetic dataset generation based on locality settings
                 for j, inputBatch in enumerate(train_ld):
                     
                     if j == 0 and args.save_onnx:
