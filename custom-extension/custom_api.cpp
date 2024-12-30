@@ -118,9 +118,9 @@ torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cor
   std::vector<long int> coalesced_indices_vector;
   std::vector<long int> start_indices;
   std::vector<long int> end_indices;
-  for(int i = 0; i < n_rows; i++){
-    if(i == 0 || indices_vector_with_index[i].first != indices_vector_with_index[i-1].first){
-      if(i != 0){
+  for (int i = 0; i < n_rows; i++) {
+    if (i == 0 || indices_vector_with_index[i].first != indices_vector_with_index[i-1].first) {
+      if (i != 0) {
         end_indices.push_back(i - 1);
       }
       coalesced_indices_vector.push_back(indices_vector_with_index[i].first);
