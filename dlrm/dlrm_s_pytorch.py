@@ -490,10 +490,10 @@ class DLRM_Net(nn.Module):
     def apply_emb(self, lS_o, lS_i, emb_l, v_W_l, emb_biases):
         # WARNING: notice that we are processing the batch at once. We implicitly
         # assume that the data is laid out such that:
-        # 1. each embedding is indexed with a group of sparse indices,
+        # 1. Each embedding is indexed with a group of sparse indices,
         #   corresponding to a single lookup
-        # 2. for each embedding the lookups are further organized into a batch
-        # 3. for a list of embedding tables there is a list of batched lookups
+        # 2. For each embedding the lookups are further organized into a batch
+        # 3. For a list of embedding tables there is a list of batched lookups
 
         ly = []
         for k, sparse_index_group_batch in enumerate(lS_i):
