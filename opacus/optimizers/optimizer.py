@@ -426,6 +426,7 @@ class DPOptimizer(Optimizer):
         Performs gradient clipping.
         Stores clipped and aggregated gradients into `p.summed_grad```
         """
+        # MODE_DPSGD_B: basic DPSGD implementation
         if config.dpsgd_mode == MODE_DPSGD_B:
             assert losses == None
             if len(self.grad_samples[0]) == 0:
@@ -489,6 +490,7 @@ class DPOptimizer(Optimizer):
                 _mark_as_processed(p.grad_sample)
                 
             config.profiler.end("Update_clip_and_reduce")
+        # MODE_DPSGD_R/F: DPSGD proposed in prior work
         elif config.dpsgd_mode in [MODE_DPSGD_R, MODE_DPSGD_F, MODE_EANA]:
             config.profiler.start("clipping_factor")
             assert losses != None
