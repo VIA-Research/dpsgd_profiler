@@ -67,6 +67,7 @@ torch::Tensor normal_multi_thread_with_extra(const torch::Tensor &std, int dim, 
 }
 
 
+// NOTE: implement torch.unique functionality
 torch::Tensor unique_multi_thread(const torch::Tensor &input){
   std::vector<long int> input_vector(input.data<long int>(), input.data<long int>() + input.numel());
   
