@@ -488,7 +488,7 @@ class DLRM_Net(nn.Module):
         return layers(x)
 
     def apply_emb(self, lS_o, lS_i, emb_l, v_W_l, emb_biases):
-        # WARNING: notice that we are processing the batch at once. We implicitly
+        # WARNING: Note that we are processing the batch at once. We implicitly
         # assume that the data is laid out such that:
         # 1. Each embedding is indexed with a group of sparse indices,
         #   corresponding to a single lookup
