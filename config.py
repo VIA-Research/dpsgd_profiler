@@ -1,13 +1,13 @@
 import torch
 
-# mode configuration
+# define configuration modes
 MODE_DPSGD_B = 1
 MODE_DPSGD_R = 2
 MODE_DPSGD_F = 3
 MODE_SGD = 4
 MODE_EANA = 5
 
-# training configurations
+# set training configurations
 disable_poisson_sampling = False
 num_gathers = 20
 num_gathers_list = None
@@ -16,14 +16,14 @@ batch_size = 4
 cur_batch_size = 4
 data_size = 1
 
-# Device to use
-use_cpu = True # True for cpu-gpu system, False for gpu-only system
+# set device
+use_cpu = True # True for CPU-GPU systems, False for GPU-only systems
 device = torch.device('cpu')
 
 # Profiler
 profiler = None
 
-# Customized pytorch functions
+# PyTorch custom functions
 coalesce_nthreads = 32
 coalesce_optimize = "baseline" # "baseline" / "multi_thread_openmp" / "multi_thread_embeddingbag"
 
