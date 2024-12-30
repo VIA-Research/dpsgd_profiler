@@ -85,7 +85,7 @@ typedef std::pair<long int, long int> int_pair;
 
 torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cores){
   // If input tensor is already coalesced, just return
-  if(input.is_coalesced()){
+  if (input.is_coalesced()) {
     return input;
   }
 
@@ -104,7 +104,7 @@ torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cor
   // Create a vector of pairs (indices, new indices started from 0)
   std::vector<long int> indices_vector(indices.data<long int>(), indices.data<long int>() + indices.numel());
   std::vector<std::pair<long int, long int>> indices_vector_with_index(n_rows);
-  for(int i = 0; i < n_rows; i++){
+  for (int i = 0; i < n_rows; i++) {
     indices_vector_with_index[i].first = indices_vector[i];
     indices_vector_with_index[i].second = i;
   }
