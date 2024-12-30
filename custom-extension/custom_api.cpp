@@ -84,6 +84,7 @@ torch::Tensor unique_multi_thread(const torch::Tensor &input){
 
 typedef std::pair<long int, long int> int_pair;
 
+// NOTE: implement torch.coalesce functionality (multi-threaded CPU) with OpenMP
 torch::Tensor coalesce_multi_thread_openmp(const torch::Tensor &input, int n_cores){
   // If input tensor is already coalesced, just return
   if (input.is_coalesced()) {
