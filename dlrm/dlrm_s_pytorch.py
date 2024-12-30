@@ -647,7 +647,7 @@ class DLRM_Net(nn.Module):
         with record_function("DLRM embedding forward"):
             ly = self.apply_emb(lS_o, lS_i, self.emb_l, self.v_W_l)
 
-        # WARNING: Note that at this point we have the result of the embedding lookup
+        # WARNING: Note that at this point we have the results of the embedding lookup
         # for the entire batch on each rank. We would like to obtain partial results
         # corresponding to all embedding lookups, but part of the batch on each rank.
         # Therefore, matching the distribution of output of bottom mlp, so that both
@@ -727,8 +727,8 @@ class DLRM_Net(nn.Module):
         batch_size = dense_x.size()[0]
         ndevices = min(self.ndevices, batch_size, len(self.emb_l))
         device_ids = range(ndevices)
-        # WARNING: must redistribute the model if mini-batch size changes(this is common
-        # for last mini-batch, when # of elements in the dataset/batch size is not even
+        # WARNING: must redistribute the model if mini-batch size changes (this is common
+        # for last mini-batch, when # of elements in the dataset/batch size is not even)
         if self.parallel_model_batch_size != batch_size:
             self.parallel_model_is_not_prepared = True
 
